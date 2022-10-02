@@ -28,8 +28,22 @@
     <script type="text/javascript">
         const socket = io('localhost:3000');
 
+        function renderMessage(message) {
+            $('.messages').append(`<div class="message"<strong>${message.author}</strong>: ${message.message}</div>`);
+        }
+
+        socket.on('previousMessages', messages => {
+            for (const message of messages) {
+                renderMessage(message);
+            }
+        });
+
+        socket.on('receivedMessage', message => {
+            renderMessage(message);
+        });
+
         $('#chat').submit(function (envent) {
-            event.preventDefault()
+            event.preventDefault();
 
             const author = $('input[name=username]').val();
             const message = $('input[name=message]').val();
@@ -40,6 +54,7 @@
                     message
                 }
                 
+                renderMessage(messageObject);
                 socket.emit('sendMessage', messageObject);
             }
         });
