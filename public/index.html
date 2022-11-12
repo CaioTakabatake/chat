@@ -26,7 +26,7 @@
     </form>
 
     <script type="text/javascript">
-        const socket = io('localhost:3000');
+        const socket = io('https://chat-nine-smoky.vercel.app:3000');
 
         function renderMessage(message) {
             $('.messages').append(`<div class="message"<strong>${message.author}</strong>: ${message.message}</div>`);
